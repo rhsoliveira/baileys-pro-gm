@@ -1,18 +1,18 @@
 {
   "name": "baileys",
-  "type": "commonjs",
+  "type": "module",
   "version": "7.0.0-rc.9",
   "description": "A WebSockets library for interacting with WhatsApp Web",
   "keywords": [
     "whatsapp",
     "automation"
   ],
-  "homepage": "https://github.com/WhiskeySockets/Baileys/",
+  "homepage": "https://github.com/rhsoliveira/baileys-pro-gm",
   "repository": {
-    "url": "git@github.com:WhiskeySockets/Baileys.git"
+    "url": "git+https://github.com/rhsoliveira/baileys-pro-gm.git"
   },
   "license": "MIT",
-  "author": "Rajeh Taher",
+  "author": "RHS Oliveira",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "files": [
@@ -23,7 +23,7 @@
   "scripts": {
     "build:all": "npm run build && npm run build:docs",
     "build:docs": "typedoc",
-    "build": "tsc -P tsconfig.build.json",
+    "build": "tsc -P tsconfig.build.json && tsc-esm-fix --tsconfig=tsconfig.build.json --ext=.js",
     "changelog:last": "conventional-changelog -p angular -r 2",
     "changelog:preview": "conventional-changelog -p angular -u",
     "changelog:update": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0",
@@ -46,10 +46,13 @@
     "@hapi/boom": "^9.1.3",
     "async-mutex": "^0.5.0",
     "libsignal": "git+https://github.com/whiskeysockets/libsignal-node",
+        "node-addon-api": "^8.5.0",
     "lru-cache": "^11.1.0",
     "music-metadata": "^11.7.0",
+    "p-queue": "^9.0.0",
     "pino": "^9.6",
     "protobufjs": "^7.2.4",
+    "whatsapp-rust-bridge": "0.5.2",
     "ws": "^8.13.0"
   },
   "devDependencies": {

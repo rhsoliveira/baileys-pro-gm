@@ -13,16 +13,16 @@
 # Important Note
 This is a temporary README.md, the new guide is in development and will this file will be replaced with .github/README.md (already a default on GitHub).
 
-New guide link: https://baileys.wiki
+Fork repository: https://github.com/rhsoliveira/baileys-pro-gm
 
 # Get Support
 
-If you'd like business to enterprise-level support from Rajeh, the current maintainer of Baileys, you can book a video chat. Book a 1 hour time slot by contacting him on Discord or pre-ordering [here](https://purpshell.dev/book). The earlier you pre-order the better, as his time slots usually fill up very quickly. He offers immense value per hour and will answer all your questions before the time runs out.
+This fork is maintained for integration with Evolution API Pro and related deployments.
 
-If you are a business, we encourage you to contribute back to the high development costs of the project and to feed the maintainers who dump tens of hours a week on this. You can do so by booking meetings or sponsoring below. All support, even in bona fide / contribution hours, is welcome by businesses of all sizes. This is not condoning or endorsing businesses to use the library. See the Disclaimer below.
+If you are using this fork in production, keep your deployment flow and dependency references aligned with the `rhsoliveira/baileys-pro-gm` repository.
 
 # Sponsor
-If you'd like to financially support this project, you can do so by supporting the current maintainer [here](https://purpshell.dev/sponsor).
+For repository updates and issue tracking, use the fork repository: https://github.com/rhsoliveira/baileys-pro-gm
 
 # Disclaimer
 This project is not affiliated, associated, authorized, endorsed by, or in any way officially connected with WhatsApp or any of its subsidiaries or its affiliates.
@@ -1324,7 +1324,7 @@ sock.ws.on('CB:edge_routing,id:abcd,routing_info', (node: BinaryNode) => { })
 ```
 
 # License
-Copyright (c) 2025 Rajeh Taher/WhiskeySockets
+Copyright (c) 2025 RHS Oliveira
 
 Licensed under the MIT License:
 Permission is hereby granted, free of charge, to any person obtaining a copy

@@ -1,7 +1,8 @@
-import { createCipheriv, createDecipheriv, createHash, createHmac, hkdfSync, randomBytes } from 'crypto'
+import { createCipheriv, createDecipheriv, createHash, createHmac, randomBytes } from 'crypto'
 import * as curve from 'libsignal/src/curve'
 import { KEY_BUNDLE_TYPE } from '../Defaults'
 import type { KeyPair } from '../Types'
+export { md5, hkdf } from 'whatsapp-rust-bridge'
 
 // insure browser & node compatibility
 const { subtle } = globalThis.crypto
@@ -116,21 +117,6 @@ export function hmacSign(
 
 export function sha256(buffer: Buffer) {
 	return createHash('sha256').update(buffer).digest()
-}
-
-export function md5(buffer: Buffer) {
-	return createHash('md5').update(buffer).digest()
-}
-
-export function hkdf(
-	buffer: Uint8Array | Buffer,
-	expandedLength: number,
-	info: { salt?: Buffer; info?: string }
-): Buffer {
-	const salt = info.salt || Buffer.alloc(0)
-	const infoBytes = Buffer.from(info.info || '', 'utf8')
-	const derived = hkdfSync('sha256', Buffer.from(buffer), salt, infoBytes, expandedLength)
-	return Buffer.from(derived)
 }
 
 export async function derivePairingCodeKey(pairingCode: string, salt: Buffer): Promise<Buffer> {

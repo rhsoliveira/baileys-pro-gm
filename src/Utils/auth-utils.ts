@@ -2,6 +2,7 @@ import NodeCache from '@cacheable/node-cache'
 import { AsyncLocalStorage } from 'async_hooks'
 import { Mutex } from 'async-mutex'
 import { randomBytes } from 'crypto'
+import PQueue from 'p-queue'
 import { DEFAULT_CACHE_TTLS } from '../Defaults'
 import type {
 	AuthenticationCreds,
@@ -16,7 +17,6 @@ import { Curve, signedKeyPair } from './crypto'
 import { delay, generateRegistrationId } from './generics'
 import type { ILogger } from './logger'
 import { PreKeyManager } from './pre-key-manager'
-import { SerialTaskQueue } from './serial-task-queue'
 
 /**
  * Transaction context stored in AsyncLocalStorage
@@ -145,7 +145,7 @@ export const addTransactionCapability = (
 	const txStorage = new AsyncLocalStorage<TransactionContext>()
 
 	// Queues for concurrency control (keyed by signal data type - bounded set)
-	const keyQueues = new Map<string, SerialTaskQueue>()
+	const keyQueues = new Map<string, PQueue>()
 
 	// Transaction mutexes with reference counting for cleanup
 	const txMutexes = new Map<string, Mutex>()
@@ -157,9 +157,9 @@ export const addTransactionCapability = (
 	/**
 	 * Get or create a queue for a specific key type
 	 */
-	function getQueue(key: string): SerialTaskQueue {
+	function getQueue(key: string): PQueue {
 		if (!keyQueues.has(key)) {
-			keyQueues.set(key, new SerialTaskQueue())
+			keyQueues.set(key, new PQueue({ concurrency: 1 }))
 		}
 
 		return keyQueues.get(key)!

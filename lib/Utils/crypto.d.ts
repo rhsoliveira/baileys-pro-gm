@@ -1,4 +1,5 @@
-import type { KeyPair } from '../Types';
+import type { KeyPair } from '../Types/index.js';
+export { md5, hkdf } from 'whatsapp-rust-bridge';
 /** prefix version byte to the pub keys, required for some curve crypto functions */
 export declare const generateSignalPubKey: (pubKey: Uint8Array | Buffer) => Uint8Array<ArrayBufferLike> | Buffer<ArrayBufferLike>;
 export declare const Curve: {
@@ -32,10 +33,5 @@ export declare function aesEncrypt(buffer: Uint8Array, key: Uint8Array): Buffer<
 export declare function aesEncrypWithIV(buffer: Buffer, key: Buffer, IV: Buffer): Buffer<ArrayBuffer>;
 export declare function hmacSign(buffer: Buffer | Uint8Array, key: Buffer | Uint8Array, variant?: 'sha256' | 'sha512'): Buffer<ArrayBufferLike>;
 export declare function sha256(buffer: Buffer): Buffer<ArrayBufferLike>;
-export declare function md5(buffer: Buffer): Buffer<ArrayBufferLike>;
-export declare function hkdf(buffer: Uint8Array | Buffer, expandedLength: number, info: {
-    salt?: Buffer;
-    info?: string;
-}): Buffer;
 export declare function derivePairingCodeKey(pairingCode: string, salt: Buffer): Promise<Buffer>;
 //# sourceMappingURL=crypto.d.ts.map

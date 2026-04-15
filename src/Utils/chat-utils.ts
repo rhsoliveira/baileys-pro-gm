@@ -1,4 +1,5 @@
 import { Boom } from '@hapi/boom'
+import { expandAppStateKeys } from 'whatsapp-rust-bridge'
 import { proto } from '../../WAProto/index.js'
 import type {
 	BaileysEventEmitter,
@@ -19,7 +20,7 @@ import {
 	type MessageLabelAssociation
 } from '../Types/LabelAssociation'
 import { type BinaryNode, getBinaryNodeChild, getBinaryNodeChildren, isJidGroup, jidNormalizedUser } from '../WABinary'
-import { aesDecrypt, aesEncrypt, hkdf, hmacSign } from './crypto'
+import { aesDecrypt, aesEncrypt, hmacSign } from './crypto'
 import { toNumber } from './generics'
 import type { ILogger } from './logger'
 import { LT_HASH_ANTI_TAMPERING } from './lt-hash'
@@ -31,14 +32,7 @@ type FetchAppStateSyncKey = (keyId: string) => Promise<proto.Message.IAppStateSy
 export type ChatMutationMap = { [index: string]: ChatMutation }
 
 const mutationKeys = (keydata: Uint8Array) => {
-	const expanded = hkdf(keydata, 160, { info: 'WhatsApp Mutation Keys' })
-	const keys = {
-		indexKey: expanded.subarray(0, 32),
-		valueEncryptionKey: expanded.subarray(32, 64),
-		valueMacKey: expanded.subarray(64, 96),
-		snapshotMacKey: expanded.subarray(96, 128),
-		patchMacKey: expanded.subarray(128, 160)
-	}
+	const keys = expandAppStateKeys(keydata)
 	return {
 		indexKey: keys.indexKey,
 		valueEncryptionKey: keys.valueEncryptionKey,

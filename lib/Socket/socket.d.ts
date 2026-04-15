@@ -1,9 +1,9 @@
 import { Boom } from '@hapi/boom';
-import type { SocketConfig } from '../Types';
-import { type BinaryNode } from '../WABinary';
+import type { SocketConfig } from '../Types/index.js';
+import { type BinaryNode } from '../WABinary/index.js';
 import { BinaryInfo } from '../WAM/BinaryInfo.js';
-import { USyncQuery } from '../WAUSync/';
-import { WebSocketClient } from './Client';
+import { USyncQuery } from '../WAUSync/index.js';
+import { WebSocketClient } from './Client/index.js';
 /**
  * Connects to WA servers and performs:
  * - simple queries (no retry mechanism, wait for connection establishment)
@@ -13,19 +13,19 @@ import { WebSocketClient } from './Client';
 export declare const makeSocket: (config: SocketConfig) => {
     type: "md";
     ws: WebSocketClient;
-    ev: import("../Types").BaileysEventEmitter & {
-        process(handler: (events: Partial<import("../Types").BaileysEventMap>) => void | Promise<void>): () => void;
+    ev: import("../Types/index.js").BaileysEventEmitter & {
+        process(handler: (events: Partial<import("../Types/index.js").BaileysEventMap>) => void | Promise<void>): () => void;
         buffer(): void;
         createBufferedFunction<A extends any[], T>(work: (...args: A) => Promise<T>): (...args: A) => Promise<T>;
         flush(): boolean;
         isBuffering(): boolean;
     };
     authState: {
-        creds: import("../Types").AuthenticationCreds;
-        keys: import("../Types").SignalKeyStoreWithTransaction;
+        creds: import("../Types/index.js").AuthenticationCreds;
+        keys: import("../Types/index.js").SignalKeyStoreWithTransaction;
     };
-    signalRepository: import("../Types").SignalRepositoryWithLIDStore;
-    readonly user: import("../Types").Contact | undefined;
+    signalRepository: import("../Types/index.js").SignalRepositoryWithLIDStore;
+    readonly user: import("../Types/index.js").Contact | undefined;
     generateMessageTag: () => string;
     query: (node: BinaryNode, timeoutMs?: number) => Promise<any>;
     waitForMessage: <T>(msgId: string, timeoutMs?: number | undefined) => Promise<T | undefined>;
@@ -44,9 +44,9 @@ export declare const makeSocket: (config: SocketConfig) => {
     sendUnifiedSession: () => Promise<void>;
     wamBuffer: BinaryInfo;
     /** Waits for the connection to WA to reach a state */
-    waitForConnectionUpdate: (check: (u: Partial<import("../Types").ConnectionState>) => Promise<boolean | undefined>, timeoutMs?: number) => Promise<void>;
+    waitForConnectionUpdate: (check: (u: Partial<import("../Types/index.js").ConnectionState>) => Promise<boolean | undefined>, timeoutMs?: number) => Promise<void>;
     sendWAMBuffer: (wamBuffer: Buffer) => Promise<any>;
-    executeUSyncQuery: (usyncQuery: USyncQuery) => Promise<import("../WAUSync/USyncQuery.js").USyncQueryResult | undefined>;
+    executeUSyncQuery: (usyncQuery: USyncQuery) => Promise<import("../index.js").USyncQueryResult | undefined>;
     onWhatsApp: (...phoneNumber: string[]) => Promise<{
         jid: string;
         exists: boolean;
