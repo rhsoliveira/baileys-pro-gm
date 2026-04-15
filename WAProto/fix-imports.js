@@ -7,7 +7,8 @@ try {
   let content = readFileSync(filePath, 'utf8')
 
   content = content.replace(/import \* as (\$protobuf) from/g, 'import $1 from')
-  content = content.replace(/(['"])protobufjs\/minimal(['"])/g, '$1protobufjs/minimal.js$2')
+  content = content.replace(/import (\$protobuf) from/g, 'var $1 = require')
+  content = content.replace(/(['"])protobufjs\/minimal(['"])/g, '$1protobufjs/minimal$2')
 
   const marker = 'const $root = $protobuf.roots["default"] || ($protobuf.roots["default"] = {});\n\n'
   const longToStringHelper =
