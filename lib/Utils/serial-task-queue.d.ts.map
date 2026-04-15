@@ -1,0 +1,1 @@
+{"version":3,"file":"serial-task-queue.d.ts","sourceRoot":"","sources":["../../src/Utils/serial-task-queue.ts"],"names":[],"mappings":"AAAA,qBAAa,eAAe;IAC3B,OAAO,CAAC,OAAO,CAAsC;IAErD,GAAG,CAAC,CAAC,EAAE,IAAI,EAAE,MAAM,OAAO,CAAC,CAAC,CAAC,GAAG,CAAC,GAAG,OAAO,CAAC,CAAC,CAAC;CAQ9C"}
