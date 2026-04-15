@@ -1,12 +1,12 @@
-import PQueue from 'p-queue'
 import type { SignalDataSet, SignalDataTypeMap, SignalKeyStore } from '../Types'
 import type { ILogger } from './logger'
+import { SerialTaskQueue } from './serial-task-queue'
 
 /**
  * Manages pre-key operations with proper concurrency control
  */
 export class PreKeyManager {
-	private readonly queues = new Map<string, PQueue>()
+	private readonly queues = new Map<string, SerialTaskQueue>()
 
 	constructor(
 		private readonly store: SignalKeyStore,
@@ -16,9 +16,9 @@ export class PreKeyManager {
 	/**
 	 * Get or create a queue for a specific key type
 	 */
-	private getQueue(keyType: string): PQueue {
+	private getQueue(keyType: string): SerialTaskQueue {
 		if (!this.queues.has(keyType)) {
-			this.queues.set(keyType, new PQueue({ concurrency: 1 }))
+			this.queues.set(keyType, new SerialTaskQueue())
 		}
 
 		return this.queues.get(keyType)!

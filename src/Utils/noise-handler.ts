@@ -64,9 +64,9 @@ export const makeNoiseHandler = ({
 
 	const data = Buffer.from(NOISE_MODE)
 	let hash = data.byteLength === 32 ? data : sha256(data)
-	let salt: Uint8Array = hash
-	let encKey: Uint8Array = hash
-	let decKey: Uint8Array = hash
+	let salt: Buffer = hash
+	let encKey: Buffer = hash
+	let decKey: Buffer = hash
 	let counter = 0
 	let sentIntro = false
 
@@ -116,9 +116,9 @@ export const makeNoiseHandler = ({
 		return result
 	}
 
-	const localHKDF = (data: Uint8Array): [Uint8Array, Uint8Array] => {
+	const localHKDF = (data: Uint8Array): [Buffer, Buffer] => {
 		const key = hkdf(Buffer.from(data), 64, { salt, info: '' })
-		return [key.subarray(0, 32), key.subarray(32)]
+		return [Buffer.from(key.subarray(0, 32)), Buffer.from(key.subarray(32))]
 	}
 
 	const mixIntoKey = (data: Uint8Array) => {
